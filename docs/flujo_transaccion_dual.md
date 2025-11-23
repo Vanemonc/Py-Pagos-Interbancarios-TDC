@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant Cliente
     participant AppWeb
@@ -81,3 +82,4 @@ sequenceDiagram
         end
         
     end
+```
