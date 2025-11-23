@@ -1,0 +1,36 @@
+# Archivo: .github/workflows/deploy.yml
+# Archivo: .github/workflows/deploy.yml
+name: Deploy Frontend to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths: # Solo se ejecuta si hay cambios en estas carpetas
+      - 'Frontend/**'
+      - '.github/workflows/deploy.yml' # Incluir el propio archivo de workflow
+  workflow_dispatch:
+# Permisos requeridos para que la acción pueda publicar en Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  # Configuración del build (o simplemente preparación de los archivos)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        # Esta acción toma los archivos de la carpeta 'Frontend' y los empaqueta
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # ¡AQUÍ ESTÁ LA CLAVE! Apunta a la carpeta correcta
+          path: 'Frontend'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
